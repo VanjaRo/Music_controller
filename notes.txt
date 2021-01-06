@@ -1,0 +1,3 @@
+1) Rewrite by making the react components function based.
+2) Install the react for project by npx create-react-app “[app_name_here]”.
+(It will be slightly different as the webpack setup is different, but it will work almost the same. You can always run ‘npm run eject’ to get all the configuration files and edit them though)
