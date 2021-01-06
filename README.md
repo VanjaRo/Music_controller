@@ -1,6 +1,6 @@
 # Music_controller
 Music controller app using React, Django and Spotify api.
-# Music-Controller-Web-App-Tutorial
+# Music-Controller-Web-App
 
 The code was written using Tech With Tim's "Django & React Full Stack Web App Tutorial" series.
 
