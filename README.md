@@ -1,8 +1,8 @@
 # Music_controller
-Music controller app using React, Django and Spotify api.
-# Music-Controller-Web-App
 
-The code was written using Tech With Tim's "Django & React Full Stack Web App Tutorial" series.
+Music controller app using React, Django and Spotify api.
+
+The code was written with Tech With Tim's "Django & React Full Stack Web App Tutorial" series.
 
 ## Setup Instructions
 
@@ -11,15 +11,19 @@ The code was written using Tech With Tim's "Django & React Full Stack Web App Tu
 ```bash
 pip install -r requirements.txt
 ```
+
 ### Start Web Server
 
 To start the web server you need to run the following sequence of commands.
 
 First cd into your desired tutorial folder (replace x with tutorial number).
-```bash 
+
+```bash
 cd "Tutorial x"
 ```
+
 Next run the django web server.
+
 ```bash
 python manage.py runserver
 ```
@@ -28,11 +32,14 @@ python manage.py runserver
 
 ### Install Node Modules
 
-First cd into the ```frontend``` folder.
+First cd into the `frontend` folder.
+
 ```bash
 cd frontend
 ```
+
 Next install all dependicies.
+
 ```bash
 npm i
 ```
@@ -40,10 +47,13 @@ npm i
 ### Compile the Front-End
 
 Run the production compile script
+
 ```bash
 npm run build
 ```
+
 or for development:
+
 ```bash
 npm run dev
 ```
