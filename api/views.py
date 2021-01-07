@@ -20,7 +20,7 @@ class GetRoom(APIView):
         code = request.GET.get(self.lookup_url_kwarg)
         if code != None:
             room = Room.objects.filter(code=code)
-            if len(room) > 0:
+            if room.exists():
                 data = RoomSerializer(room[0]).data
                 data['is_host'] = self.request.session.session_key == room[0].host
                 return Response(data, status=status.HTTP_200_OK)
@@ -70,7 +70,7 @@ class JoinRoom(APIView):
         code = request.data.get(self.lookup_url_kwarg)
         if code != None:
             room = Room.objects.filter(code=code)
-            if len(room) > 0:
+            if room.exists():
                 self.request.session['room_code'] = code
                 return Response({'message': 'Room joined!'}, status=status.HTTP_200_OK)
 
