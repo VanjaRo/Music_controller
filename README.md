@@ -16,13 +16,7 @@ pip install -r requirements.txt
 
 To start the web server you need to run the following sequence of commands.
 
-First cd into your desired tutorial folder (replace x with tutorial number).
-
-```bash
-cd "Tutorial x"
-```
-
-Next run the django web server.
+Run the django web server.
 
 ```bash
 python manage.py runserver
