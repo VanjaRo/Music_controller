@@ -1,1 +1,6 @@
 .node
+
+node_modules
+
+# secret info
+credential.py
