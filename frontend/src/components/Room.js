@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Grid, Typography, Button } from "@material-ui/core";
 import CreateRoomPage from "./CreateRoomPage";
+import { Alert } from "@material-ui/lab";
 
 export default class Room extends Component {
   constructor(props) {
@@ -17,6 +18,7 @@ export default class Room extends Component {
     this.updateShowSettings = this.updateShowSettings.bind(this);
     this.renderSettings = this.renderSettings.bind(this);
     this.renderSettingsButton = this.renderSettingsButton.bind(this);
+    this.getRoomDetails = this.getRoomDetails.bind(this);
     this.getRoomDetails();
   }
 
@@ -63,8 +65,8 @@ export default class Room extends Component {
             update={true}
             votesToSkip={this.state.votesToSkip}
             guestCanPause={this.state.guestCanPause}
-            roomCode={this.state.roomCode}
-            updateCallback={() => {}}
+            roomCode={this.roomCode}
+            updateCallback={this.getRoomDetails}
           ></CreateRoomPage>
         </Grid>
         <Grid item xs={12}>
