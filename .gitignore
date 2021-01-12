@@ -3,4 +3,4 @@
 node_modules
 
 # secret info
-credential.py
+credentials.py
