@@ -6,6 +6,7 @@ from rest_framework import status
 from rest_framework.response import Response
 from .util import *
 from api.models import Room
+from .models import Votes
 
 
 class AuthURL(APIView):
@@ -80,6 +81,8 @@ class CurrentSong(APIView):
                     artists_string += ", "
                 name = artist.get("name")
                 artists_string += name
+            votes_number = len(Votes.objects.filter(
+                room=room, song_id=song_id))
 
             song = {
                 "title": item.get("name"),
@@ -88,12 +91,23 @@ class CurrentSong(APIView):
                 "time": progress,
                 "img_url": album_cover,
                 "is_playing": is_playing,
-                "votes": 0,
+                "votes": votes_number,
+                "votes_needed": room.votes_to_skip,
                 "id": song_id,
             }
 
+            self.update_room_song(room, song_id)
+
             return Response(song, status=status.HTTP_200_OK)
         return Response({"BadRequest": "No room."}, status=status.HTTP_404_NOT_FOUND)
+
+    def update_room_song(self, room, song_id):
+        current_song = room.current_song
+
+        if current_song != song_id:
+            room.current_song = song_id
+            room.save(update_fields=["current_song"])
+            votes = Votes.objects.filter(room=room).delete()
 
 
 class PauseSong(APIView):
@@ -121,8 +135,16 @@ class SkipSong(APIView):
     def post(self, request, format=None):
         room_code = self.request.session.get("room_code")
         room = Room.objects.filter(code=room_code)[0]
-        if self.request.session.session_key == room.host:
-            skip_song(room.host)
-        else:
-            pass
+        votes = Votes.objects.filter(room=room, song_id=room.current_song)
+        user_voted = Votes.objects.filter(
+            user=self.request.session.session_key, room=room, song_id=room.current_song).exists()
+        votes_needed = room.votes_to_skip
+        if not user_voted:
+            if self.request.session.session_key == room.host or len(votes) + 1 >= votes_needed:
+                votes.delete()
+                skip_song(room.host)
+            else:
+                vote = Votes(user=self.request.session.session_key,
+                             room=room, song_id=room.current_song)
+                vote.save()
         return Response({}, status=status.HTTP_204_NO_CONTENT)
